@@ -12,7 +12,7 @@
 namespace app\api\controller;
 
 /**
- * PROJECT_妈咪v2  公共基础接口控制器
+ * newbaby 新生儿免疫平台  公共基础接口控制器
  * 1. 用户登录
  * 2. 用户注册
  * 3. 用户修改密码
@@ -64,15 +64,6 @@ class Common extends ApiBase
 
 
 
-    /**
-     * 前台台修改密码接口
-     */
-    // public function userChangePassword()
-    // {
-        
-    //     return $this->apiReturn($this->logicCommon->userChangePassword($this->param));
-
-    // }
     
 // ******************************************************************   
     /**

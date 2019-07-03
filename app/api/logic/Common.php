@@ -165,52 +165,70 @@ class Common extends ApiBase
      * 微信小程序用户授权、登录
      */
     public function wxappLogin($param = []){
-
+        
         // 1. 获取session_key 和 openid
         $wxapp_session = $this->serviceWxapp->driverWxappli->sessionKey($param['code']);
 
         if($wxapp_session == false){ // 获取用户信息失败
-
             return CommonError::$loginFail;
-
         }
-
+        // 2. 先获取到unionid
         $user_info = isset($param['user_info'])?json_decode(htmlspecialchars_decode($param['user_info']), true):[];
-
-        // 2. 用户注册
-        if(isset($wxapp_session['unionid'])){
-            $unionid = $wxapp_session['unionid'];
-        }else{
-            $unionid = isset($user_info['unionid'])?$user_info['unionid']:'';
-        }
-            // 2.1 查询用户是否存在
-        $user = $this->modelWxUser->getInfo([
-            'app_openid' => $wxapp_session['openid'], 
-            'unionid' => $unionid]);
-// dump($user); die;
-        if(empty($user)){ // 不存在，注册
-            $user = [
-                'app_openid' => $wxapp_session['openid'],
-                'nickname' => $user_info['nickName'],
-                'sex' => $user_info['gender'],
-                'headimgurl' => $user_info['avatarUrl'],
-                'country' => $user_info['country'],
-                'province' => $user_info['province'],
-                'city' => $user_info['city'],
-                // 'app_subscribe_time' => time(),
-                'unionid' =>$unionid
-            ];
             
+        if(!isset($user_info['unionid'])){
+            // 2.1 获取appid
+            $wxappInfo = $this->serviceWxapp->driverWxappli->getWxappInfo();
+
+            Vendor('encryptedData.wxBizDataCrypt');  
+            $pc = new \WXBizDataCrypt($wxappInfo['appid'], $wxapp_session['session_key']);
+
+            $encryptedData = $param['encrypted_data'];
+            $iv = $param['iv'];
             
-            if(!$this->modelWxUser->setInfo($user)){
+            $errCode = $pc->decryptData($encryptedData, $iv, $data);
 
-                return CommonError::$loginFail;
-
+            if ($errCode == 0) {
+                $user_info = json_decode($data, true);
+            } else {
+                return [API_CODE_NAME => 41001, API_MSG_NAME => '获取信息失败，请重试'];
             }
             
+            $unionid = $user_info['unionId'];
+        }else{
+            $unionid = $user_info['unionid'];
+        }
+// dump($user_info); die;
+        // 2. 查询用户信息
+        $user_where = [ 'unionid' => $unionid];
+        $user = $this->modelWxUser->getInfo($user_where);
+        $user_data = [
+            'app_openid' => $wxapp_session['openid'],
+            'nickname' => $user_info['nickName'],
+            'sex' => $user_info['gender'],
+            'headimgurl' => $user_info['avatarUrl'],
+            'country' => $user_info['country'],
+            'province' => $user_info['province'],
+            'city' => $user_info['city'],
+        ];
+        if(empty($user)){ // 不存在
+
+            $user_data['unionid'] = $unionid;
+            
+            if(!$this->modelWxUser->setInfo($user_data)) return CommonError::$loginFail;
+
+        }else{ // 存在
+
+            if(!$this->modelWxUser->updateInfo($user_where, $user_data)) return CommonError::$loginFail;
+
         }
 
         // 3. 生成user_token (3rd_token)
+        $user = $this->modelWxUser->getInfo($user_where);
+        if(empty($user['user_id'])){
+            $this->modelWxUser->updateInfo($user_where, ['user_id'=>$user['id']]);
+            $user['user_id'] = $user['id'];
+        }
+
         $format = wxappReturnUserInfo($user);
         
         return tokenSign($format);

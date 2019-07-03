@@ -14,7 +14,7 @@ namespace app\api\controller;
 use app\common\controller\ControllerBase;
 
 /**
- * PROJECT_妈咪v2 附加功能
+ * newbaby 新生儿免疫平台 附加功能
  * 1. 关于我们
  * 2. 意见反馈
  * 

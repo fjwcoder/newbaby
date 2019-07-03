@@ -18,7 +18,7 @@ namespace app\api\controller;
 use app\common\controller\ControllerBase;
 
 /**
- * PROJECT_妈咪v2 baby
+ * newbaby 新生儿免疫平台 baby
  * 
  * 
  * 预定义保单信息列表

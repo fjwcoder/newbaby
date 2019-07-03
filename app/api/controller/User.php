@@ -14,7 +14,7 @@ namespace app\api\controller;
 use app\common\controller\ControllerBase;
 
 /**
- * PROJECT_妈咪v2 用户模块
+ * newbaby 新生儿免疫平台 用户模块
  * 
  * 
  * wxapp注册后，绑定手机号码

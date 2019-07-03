@@ -117,10 +117,9 @@ function formatReturnUserInfo($user){
  */
 function wxappReturnUserInfo($user){
     return [
-        'user_id'=>isset($user['user_id'])?$user['user_id']:0,
-        'mobile'=>isset($user['mobile'])?$user['mobile']:'',
+        'user_id'=>isset($user['user_id'])?$user['user_id']:$user['id'],
         'app_openid'=>$user['app_openid'],
-        'unionid'=>'',
+        'unionid'=>$user['unionid'],
         'create_time'=>isset($user['app_subscribe_time'])?$user['app_subscribe_time']:time()
     ];
 }

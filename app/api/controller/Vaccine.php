@@ -14,7 +14,7 @@ namespace app\api\controller;
 use app\common\controller\ControllerBase;
 
 /**
- * PROJECT_妈咪v2 疫苗
+ * newbaby 新生儿免疫平台 疫苗
  * 疫苗预约
  * 疫苗预约记录
  * 抗体检测记录

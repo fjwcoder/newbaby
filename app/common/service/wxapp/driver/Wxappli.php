@@ -53,6 +53,13 @@ class Wxappli extends Wxapp implements Driver
         
         return $this->driverConfig('Wxappli');
     }
+
+    /**
+     * 获取小程序的信息
+     */
+    public function getWxappInfo(){
+        return $this->config();
+    }
     
     /**
      * create by fjw in 19.3.18
@@ -67,6 +74,7 @@ class Wxappli extends Wxapp implements Driver
          */
         $url = 'https://api.weixin.qq.com/sns/jscode2session';
         $config = $this->config();
+        // dump($config); die;
         $result = json_decode(httpsPost($url, [
             'appid' => $config['appid'],
             'secret' => $config['appsecret'],

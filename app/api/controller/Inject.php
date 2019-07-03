@@ -14,7 +14,7 @@ namespace app\api\controller;
 use app\common\controller\ControllerBase;
 
 /**
- * PROJECT_妈咪v2 疫苗接种
+ * newbaby 新生儿免疫平台 疫苗接种
  * 添加疫苗接种信息
  */
 class Inject extends ApiBase
