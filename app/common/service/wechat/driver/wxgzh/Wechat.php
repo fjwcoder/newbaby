@@ -118,47 +118,17 @@ class Wechat{
             case "subscribe": // ok by fjw in 18.6.2
                 $wx_user_info_url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN';
                 $response = httpsGet($wx_user_info_url); 
-
+                // $response = '{"subscribe":1,"openid":"o1rxE5miEDCbnSGIEKGemHBIdz0c","nickname":"9:30","sex":1,"language":"zh_CN","city":"青岛","province":"山东","country":"中国","headimgurl":"http:\/\/thirdwx.qlogo.cn\/mmopen\/Q3auHgzwzM5yKoMCXfVbnccyEJk4Picg8UzR8cjRz7ojKpdkccJ56icoRosSqxWOe9QIIGB8Mh3Fiaz4SNicuKzsKA\/132","subscribe_time":1562205597,"unionid":"oPC1q6Aul52AWBud40-bxcoEhdRQ","remark":"","groupid":0,"tagid_list":[],"subscribe_scene":"ADD_SCENE_QR_CODE","qr_scene":0,"qr_scene_str":""}';
                 $user_info = json_decode($response, true);
-                    // dump($user_info); die;
                 if($user_info){
                     $subscribe = $this->wxSubscribe($user_info);
                     $content .= $subscribe['msg'];
 
                 }
-                // unset($user_info['subscribe_scene'], $user_info['qr_scene'], $user_info['qr_scene_str']);
-                // $regist = $registerObj->subscribe($user_info, $pid); 
-                // if($regist['status']){ // 发送模板消息
-                //     if(isset($regist['type'])){
-                //         switch($regist['type']){
-                //             case 'new':
-                //                 $data = ['openid'=>$openid, 
-                //                     'first'=>$regist['first'],
-                //                     'keyword1'=>$user_info['nickname'], 
-                //                     'keyword2'=>$regist['name'],
-                //                     'keyword3'=>$regist['name'],
-                //                     'keyword4'=>date('Y-m-d H:i:s', time()),
-                //                     'remark'=>$regist['remark']];
-                //                 $this->sendTemplate('registTemplate', $data);
-                //                 return true;
-                //             break;
-                //             case 'old':
-                //                 $content .= $regist['first'].$regist['remark'];
-                //             break;
-                //             default:
-                //                 $content .= 'data error';
-                //             break;
-                //         }
-                //     }else{
-                //         $content .= $regist['first'];
-                //     }
-                    
-                // }else{ // 发送文本消息
-                //     $content .= $regist['first'];
-                // }
+
             break;
             case 'unsubscribe': // 2018.9.13 增加 取消关注 by fjw
-                Db::name('wx_user') -> where(['wx_openid'=>$openid]) -> update(['subscribe'=>2]);
+                Db::name('wx_user') -> where(['wx_openid'=>$openid]) -> update(['wx_subscribe'=>0]);
             break;
             case "CLICK":
                 switch($object->EventKey){
@@ -249,40 +219,38 @@ class Wechat{
 
     public function wxSubscribe($param = []){
         // 1. 检查是否存在
-        $user = Db::name('wx_user') -> where(['wx_openid'=>$param['openid']]) -> find();
+        $user = Db::name('wx_user') -> where(['unionid'=>$param['unionid']]) -> find();
+        $data = [
+            'nickname'=>$param['nickname'],
+            'sex'=>$param['sex'],
+            'headimgurl'=>$param['headimgurl'],
+            'unionid'=>isset($param['unionid'])?$param['unionid']:'',
+            'wx_subscribe'=>$param['subscribe'],
+            'wx_openid'=>$param['openid'],
+            'wx_language'=>$param['language'],
+            'city'=>$param['city'],
+            'province'=>$param['province'],
+            'country'=>$param['country'],
+
+            'wx_groupid'=>$param['groupid'],
+            'wx_tagid_list'=>$param['tagid_list']
+        ];
         if($user){
-            $data = ['wx_subscribe'=>1, 'wx_subscribe_time'=>$param['subscribe_time']];
-            $result = Db::name('wx_user') -> where(['wx_openid'=>$param['openid']]) -> update($data);
+            $data['wx_subscribe_time'] = $param['subscribe_time'];
+            $result = Db::name('wx_user') -> where(['unionid'=>$param['unionid']]) -> update($data);
             return ['status'=>true, 'code'=>2, 'msg'=>'欢迎回来~'];
         }else{
-            $data = [
-                'nickname'=>$param['nickname'],
-                'sex'=>$param['sex'],
-                'headimgurl'=>$param['headimgurl'],
-                'unionid'=>isset($param['unionid'])?$param['unionid']:'',
-                'wx_subscribe'=>$param['subscribe'],
-                'wx_openid'=>$param['openid'],
-                'wx_language'=>$param['language'],
-                'city'=>$param['city'],
-                'province'=>$param['province'],
-                'country'=>$param['country'],
-                
-                'wx_subscribe_time'=>$param['subscribe_time'],
-                'wx_subscribe_scene'=>$param['subscribe_scene'],
-                'wx_qr_scene'=>$param['qr_scene'],
-                'wx_qr_scene_str'=>$param['qr_scene_str'],
-    
-    
-                'wx_groupid'=>$param['groupid'],
-                'wx_tagid_list'=>$param['tagid_list']
-    
-            ];
+
+            $data['wx_subscribe_time'] = $param['subscribe_time'];
+            $data['wx_subscribe_scene'] = $param['subscribe_scene'];
+            $data['wx_qr_scene'] = $param['qr_scene'];
+            $data['wx_qr_scene_str'] = $param['qr_scene_str'];
 
             $result = Db::name('wx_user')  -> insert($data);
             if($result){
                 $lastID = Db::name('wx_user') ->getLastInsID();
-                $result = Db::name('wx_user') -> where(['wx_openid'=>$param['openid']]) -> update(['user_id'=>$lastID]);
-                return ['status'=>true, 'code'=>1, 'msg'=>'欢迎来到小爱健康宝典'];
+                $result = Db::name('wx_user') -> where(['unionid'=>$param['unionid']]) -> update(['user_id'=>$lastID]);
+                return ['status'=>true, 'code'=>1, 'msg'=>'欢迎来到新生儿免疫平台'];
             }else{
                 return ['status'=>false, 'msg'=>'获取信息失败，请重新关注公众号~'];
             }
@@ -368,65 +336,51 @@ class Wechat{
 
 
     public function menuDIY(){
-
-        $redirect_url = $this->siteroot;
-        
-        $yunqijiance_url = $redirect_url.'wechat/login?c=pregnant&a=check';
-        $erbaotijian_url = $redirect_url.'wechat/login?c=kids&a=kidslist';
-        $jiezhongtixing_url = $redirect_url.'wechat/login?c=kids&a=kidslist';
-        $murujiance_url = $redirect_url.'wechat/login?c=pregnant&a=breastmilkcheck';
-
+        $miniprogram_appid = 'wxb31a31b942906cc3';
+        $out_redirect_url = 'http://xiaoai.fjwcoder.com/';
         $menu = [
             'button'=>[
                 [
-                    'name'=>'天使守护',
+                    'name'=>'宝宝家园',
                     'sub_button'=>[
                         [
-                            'type'=>'view', 'name'=>'孕检提醒',
-                            'url'=> 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->wechat_config['appid'].'&redirect_uri='.urlencode($yunqijiance_url).'&response_type=code&scope=snsapi_base&state=1#wechat_redirect', //$redirect_url.'pregnant/check',
+                            'type'=>'miniprogram',
+                            "name"=>"宝宝建档",
+                            "url"=>"http://mp.weixin.qq.com",
+                            "appid"=>$miniprogram_appid,
+                            "pagepath"=>"pages/new/index"
                         ],
                         [
-                            'type'=>'view', 'name'=>'接种提醒',
-                            'url'=> 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->wechat_config['appid'].'&redirect_uri='.urlencode($jiezhongtixing_url).'&response_type=code&scope=snsapi_base&state=1#wechat_redirect', //$redirect_url.'pregnant/check',
-                        ],
-                        
-                        [
-                            'type'=>'view', 'name'=>'儿保体检',
-                            'url'=> 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->wechat_config['appid'].'&redirect_uri='.urlencode($erbaotijian_url).'&response_type=code&scope=snsapi_base&state=1#wechat_redirect', //$redirect_url.'pregnant/check',
+                            "type"=>"miniprogram",
+                            "name"=>"宝宝列表",
+                            "url"=>"http://mp.weixin.qq.com",
+                            "appid"=> $miniprogram_appid,
+                            "pagepath"=>"pages/user/myBabyList"
                         ],
                     ]
                 ],
                 [
-                    'name'=>'健康天地',
-                    'sub_button'=>[
-                        [
-                            'type'=>'view', 'name'=>'宝妈配方',
-                            'url'=> $redirect_url.'article/category?cid=5',
-                        ],
-                        [
-                            'type'=>'view', 'name'=>'天使配方',
-                            'url'=> $redirect_url.'article/category?cid=1',
-                        ],
-                        [
-                            'type'=>'view', 'name'=>'母乳检测',
-                            'url'=> 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$this->wechat_config['appid'].'&redirect_uri='.urlencode($murujiance_url).'&response_type=code&scope=snsapi_base&state=1#wechat_redirect', //$redirect_url.'pregnant/check',
-                        ],
-                        [
-                            'type'=>'view', 'name'=>'疫苗保险',
-                            'url'=> $redirect_url.'vaccine/insurance'
-                        ],
-                        [
-                            'type'=>'view', 'name'=>'抗体检测',
-                            'url'=> $redirect_url.'vaccine/antibodycheck'
-                        ],
-                    ]
+                    'type'=>'miniprogram',
+                    'name'=>'接种提醒',
+                    "url"=>"http://mp.weixin.qq.com",
+                    "appid"=>$miniprogram_appid,
+                    "pagepath"=>"pages/user/myBabyList"
+                    
                 ],
                 [
                     'name'=>'妈咪助手',
                     'sub_button'=>[
                         [
+                            'type'=>'view', 'name'=>'宝妈配方',
+                            'url'=> $out_redirect_url.'article/category?cid=5',
+                        ],
+                        [
+                            'type'=>'view', 'name'=>'天使配方',
+                            'url'=> $out_redirect_url.'article/category?cid=1',
+                        ],
+                        [
                             'type'=>'view','name'=>'健康知识',
-                            'url'=> $redirect_url.'article/category?cid=2',
+                            'url'=> $out_redirect_url.'article/category?cid=2',
                         ]
                     ]
                 ]

@@ -52,9 +52,14 @@ class Inject extends ApiBase
             id as inject_id, uid, baby_id, vaccine_name,
             inject_date
         ';
-        $inject_list = $this->modelInjectRecord->getList($where, $field, 'id', false);
-
-        return ['baby_info'=>$baby_info, 'inject_list'=>$inject_list];
+        $inject_list = $this->modelInjectRecord->getList($where, $field, 'id desc', false);
+        $return = ['baby_info'=>$baby_info, 'inject_list'=>$inject_list];
+        $remind = $this->logicVaccine->getBabyVaccineRemind($param);
+        
+        if(is_array($remind)){
+            $return = array_merge($return, $remind);
+        }
+        return $return;
     }
 
     /**

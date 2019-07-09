@@ -39,7 +39,6 @@ class Service extends AdminBase
      */
     public function driverInstall()
     {
-        
         IS_POST && $this->jump($this->logicService->driverInstall($this->param));
         
         $model = model(ucfirst($this->param['service_class']), LAYER_SERVICE_NAME);
@@ -47,7 +46,7 @@ class Service extends AdminBase
         $model->setDriver($this->param['driver_class']);
 
         $info = $this->logicService->getDriverInfo(['service_name' => $this->param['service_class'], 'driver_name' => $this->param['driver_class']]);
-        
+        // dump($info); die;
         $info['config'] = unserialize($info['config']);
         
         $this->assign('param', $model->driverParam());

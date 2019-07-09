@@ -23,63 +23,33 @@ class Vaccine extends ApiBase
 {
 
     /**
-     * create by fjw in 19.3.13
-     * 疫苗预约
-     * @param yu_time: 预约开始时间
-     * @param yu_endtime: 预约结束时间
-     * @param yu_jz_id: 预约接种点的id
-     * @param ym_id: 疫苗id
-     * @param us_id: 用户id
-     * @param type: 预约类型 0全部， 1未失效 2已失效
-     * @param qr_url: 预约二维码
-     * @param yu_num: 
+     * =================== 新生儿疫苗系统 begin ====================
      */
-    public function vaccineAppointment(){
 
+
+    /**
+     * 获取宝宝的接种提醒
+     */
+    public function getBabyVaccineRemind(){
+        return $this->apiReturn($this->logicVaccine->getBabyVaccineRemind($this->param));
     }
 
     /**
-     * create by fjw in 19.3.14
-     * 疫苗预约记录
-     * @param user_id: 用户id
+     * 获取疫苗信息
      */
-    public function vaccineAppointmentRecord(){
-
-        $decoded_user_token = $this->param['decoded_user_token'];
-
-        $where = ['a.us_id'=>$decoded_user_token->user_id];
-
-        if($this->param['appointment_type'] != 0){ // 0全部， 1未失效 2已失效
-
-            $where['a.type'] = $this->param['appointment_type'];
-
-        }
-
-        return $this->apiReturn($this->logicVaccine->getVaccineAppointmentRecord($where));
-
+    public function getVaccineInfo(){
+        return $this->apiReturn($this->logicVaccine->getVaccineInfoByWeek($this->param));
     }
+
+    
+
+
+
+
 
     /**
-     * create by fjw in 19.3.14
-     * 疫苗预约详情
+     * =================== 新生儿疫苗系统 end ====================
      */
-    public function vaccineAppointmentDetails(){
-
-    }
-
-    /**
-     * create by fjw in 19.3.14
-     * 抗体检测预约记录
-     * @param user_id: 用户id
-     */
-    public function antibodyTestAppointmentRecord(){
-
-
-
-        
-        return $this->apiReturn($this->logicVaccine->antibodyTestAppointmentRecord($this->param));
-
-    }
 
 
 }

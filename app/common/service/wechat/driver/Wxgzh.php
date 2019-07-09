@@ -54,11 +54,9 @@ class Wxgzh extends Wechat implements Driver
      */
     public function wechat($param){
         $wechat_config = $this->config();
-        
         if(!isset($param['wxid']) || $param['wxid'] !== $wechat_config['wxid'] ){
             return '验证错误';
         }
-        // dump($wechat_config); die;
         $wechatObj = new wxgzh\Wechat($wechat_config);
 
         return $wechatObj->index();

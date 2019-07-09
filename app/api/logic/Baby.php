@@ -64,8 +64,11 @@ class Baby extends ApiBase
 
         $where = ['uid'=>$decoded_user_token->user_id, 'id'=>intval($param['baby_id']), 'status'=>1];
 
-        return $this->modelBaby->getInfo($where);
+        return $this->separateAddress($this->modelBaby->getInfo($where));
+
     }
+
+    
 
 
     /**
@@ -79,7 +82,7 @@ class Baby extends ApiBase
         // dump($decoded_user_token); die;
         // 1. 查询用户信息
         $user = $this->modelWxUser->getInfo([
-            'wx_id'=>$decoded_user_token->user_id,
+            'id'=>$decoded_user_token->user_id,
             'user_id'=>$decoded_user_token->user_id,
         ]);
         $user_data = [
@@ -116,7 +119,9 @@ class Baby extends ApiBase
             // $validate = $this->modelBaby->validateBabyInfo($user_data, $param);
             // if($validate['status'] == false) return [API_CODE_NAME => 41003, API_MSG_NAME => $validate['msg']];
             if($this->modelBaby->setInfo($data)){
-                return true;
+                $baby_id = $this->modelBaby->getLastInsID();
+                $babyInfo = $this->separateAddress($this->modelBaby->getInfo(['id'=>$baby_id]));
+                return ['babyInfo'=>$babyInfo];
             }else{
                 return [API_CODE_NAME => 41004, API_MSG_NAME => '添加宝宝信息失败'];
             }
@@ -125,7 +130,8 @@ class Baby extends ApiBase
             // $validate = $this->modelBaby->validateBabyInfo($user_data, $param);
             // if($validate['status'] == false) return [API_CODE_NAME => 41003, API_MSG_NAME => $validate['msg']];
             if($this->modelBaby->updateInfo(['id'=>$baby_id, 'uid'=>$decoded_user_token->user_id], $data)){
-                return true;
+                $babyInfo = $this->separateAddress($this->modelBaby->getInfo(['id'=>$baby_id]));
+                return ['babyInfo'=>$babyInfo];
             }else{
                 return [API_CODE_NAME => 41004, API_MSG_NAME => '更新宝宝信息失败'];
             }
@@ -151,11 +157,11 @@ class Baby extends ApiBase
         
         // 2. 拼凑数据
         $parent_data = [
-            'mather_name'=>$param['mather_name'],
-            'mather_age'=>intval($param['mather_age']),
-            'mather_nationality'=>$param['mather_nationality'],
-            'mather_nation'=>$param['mather_nation'],
-            'mather_id_no'=>$param['mather_id_no'],
+            'mother_name'=>$param['mother_name'],
+            'mother_age'=>intval($param['mother_age']),
+            'mother_nationality'=>$param['mother_nationality'],
+            'mother_nation'=>$param['mother_nation'],
+            'mother_id_no'=>$param['mother_id_no'],
 
             'father_name'=>$param['father_name'],
             'father_age'=>intval($param['father_age']),
@@ -165,8 +171,9 @@ class Baby extends ApiBase
 
         ];
 
-        if($this->modelBaby->updateInfo(['id'=>$baby_id, 'uid'=>$decoded_user_token->user_id], $data)){
-            return true;
+        if($this->modelBaby->updateInfo(['id'=>$baby_id, 'uid'=>$decoded_user_token->user_id], $parent_data)){
+            $babyInfo = $this->separateAddress($this->modelBaby->getInfo(['id'=>$baby_id]));
+                return ['babyInfo'=>$babyInfo];
         }else{
             return [API_CODE_NAME => 41004, API_MSG_NAME => '保存父母信息失败'];
         }
@@ -188,21 +195,39 @@ class Baby extends ApiBase
         if($check['status'] == false) return [API_CODE_NAME => 41002, API_MSG_NAME => $check['msg']];
         
         // 2. 拼凑数据
-        $parent_data = [
+        $guardain_data = [
             'guardian_name'=>$param['guardian_name'],
             'guardian_mobile'=>intval($param['guardian_mobile']),
             'backup_mobile'=>$param['backup_mobile'],
             'relationship_to_baby'=>intval($param['relationship_to_baby']), // 监护人与宝宝关系 1：父子；2：母子；3：父女；4：母女
-            'address'=>$param['province'].' '.$param['city'].' '.$param['area'].' '.$param['address'],
+            'address'=>$param['province'].';'.$param['city'].';'.$param['area'].';'.$param['address'],
 
         ];
 
-        if($this->modelBaby->updateInfo(['id'=>$baby_id, 'uid'=>$decoded_user_token->user_id], $data)){
-            return true;
+        if($this->modelBaby->updateInfo(['id'=>$baby_id, 'uid'=>$decoded_user_token->user_id], $guardain_data)){
+
+            $babyInfo = $this->separateAddress($this->modelBaby->getInfo(['id'=>$baby_id]));
+            return ['babyInfo'=>$babyInfo];
         }else{
             return [API_CODE_NAME => 41004, API_MSG_NAME => '保存监护人信息失败'];
         }
 
+    }
+
+
+    /**
+     * add by fjw in 19.7.4
+     * 处理address
+     */
+    public function separateAddress($babyInfo){
+
+        $address = explode(';', $babyInfo['address']);
+        $babyInfo['province'] = isset($address[0])?$address[0]:'';
+        $babyInfo['city'] = isset($address[1])?$address[1]:'';
+        $babyInfo['area'] = isset($address[2])?$address[2]:'';
+        $babyInfo['address'] = isset($address[3])?$address[3]:'';
+
+        return $babyInfo;
     }
 
     

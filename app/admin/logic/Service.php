@@ -34,20 +34,19 @@ class Service extends AdminBase
      */
     public function driverInstall($data = [])
     {
-        
         $where['service_name'] = $data['service_name'];
         $where['driver_name']  = $data['driver_name'];
         
         $info = $this->modelDriver->getInfo($where);
         
         $info['config']       = serialize($data['param']);
+
         $info['service_name'] = $data['service_name'];
         $info['driver_name']  = $data['driver_name'];
-        
         $url = url('service/servicelist', ['service_name' => $data['service_name']]);
         
         $result = $this->modelDriver->setInfo($info);
-        
+
         $result && action_log('安装', '驱动安装或设置，service_name：' . $data['service_name'] . '，driver_name' . $data['driver_name']);
         
         return $result ? [RESULT_SUCCESS, '操作成功', $url] : [RESULT_ERROR, $this->modelDriver->getError()];

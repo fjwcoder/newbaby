@@ -23,26 +23,26 @@ class Baby extends ApiBase
      * 检查参数信息
      */
     public function checkBabyInfo($param){
-        if(empty($param['baby_sex'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['date_of_birth'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['place_of_birth'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['pregnant_week'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['health_status'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['baby_weight'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['baby_height'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['birth_place_type'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['name_of_facility'])) return ['status'=>false, 'msg'=>'参数信息错误'];
+        if(empty($param['baby_sex'])) return ['status'=>false, 'msg'=>'baby性别信息错误'];
+        if(empty($param['date_of_birth'])) return ['status'=>false, 'msg'=>'出生日期信息错误'];
+        if(empty($param['place_of_birth'])) return ['status'=>false, 'msg'=>'出生地点信息错误'];
+        if(empty($param['pregnant_week'])) return ['status'=>false, 'msg'=>'孕周信息错误'];
+        if(empty($param['health_status'])) return ['status'=>false, 'msg'=>'健康状况信息错误'];
+        if(empty($param['baby_weight'])) return ['status'=>false, 'msg'=>'出生体重信息错误'];
+        if(empty($param['baby_height'])) return ['status'=>false, 'msg'=>'出生身高信息错误'];
+        if(empty($param['birth_place_type'])) return ['status'=>false, 'msg'=>'出生地类型信息错误'];
+        if(empty($param['name_of_facility'])) return ['status'=>false, 'msg'=>'出生机构信息错误'];
         return ['status'=>true];
     }
     /**
      * 检查参数信息
      */
     public function checkParentsInfo($param){
-        if(empty($param['mather_name'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['mather_age'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['mather_nationality'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['mather_nation'])) return ['status'=>false, 'msg'=>'参数信息错误'];
-        if(empty($param['mather_id_no'])) return ['status'=>false, 'msg'=>'参数信息错误'];
+        if(empty($param['mother_name'])) return ['status'=>false, 'msg'=>'参数信息错误'];
+        if(empty($param['mother_age'])) return ['status'=>false, 'msg'=>'参数信息错误'];
+        if(empty($param['mother_nationality'])) return ['status'=>false, 'msg'=>'参数信息错误'];
+        if(empty($param['mother_nation'])) return ['status'=>false, 'msg'=>'参数信息错误'];
+        if(empty($param['mother_id_no'])) return ['status'=>false, 'msg'=>'参数信息错误'];
         
         if(empty($param['father_name'])) return ['status'=>false, 'msg'=>'参数信息错误'];
         if(empty($param['father_age'])) return ['status'=>false, 'msg'=>'参数信息错误'];
@@ -88,7 +88,7 @@ class Baby extends ApiBase
         }
         
         // return ['kids_check_list'=>$kids_check_list, 'vaccine_check_list'=>$vaccine_check_list];
-        return ['vaccine_check_list'=>$vaccine_check_list];
+        return ['vaccine_check_info'=>$vaccine_check_info, 'vaccine_check_list'=>$vaccine_check_list];
     }
 
 

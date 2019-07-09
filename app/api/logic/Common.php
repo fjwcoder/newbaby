@@ -174,7 +174,7 @@ class Common extends ApiBase
         }
         // 2. 先获取到unionid
         $user_info = isset($param['user_info'])?json_decode(htmlspecialchars_decode($param['user_info']), true):[];
-            
+        
         if(!isset($user_info['unionid'])){
             // 2.1 获取appid
             $wxappInfo = $this->serviceWxapp->driverWxappli->getWxappInfo();
@@ -186,13 +186,13 @@ class Common extends ApiBase
             $iv = $param['iv'];
             
             $errCode = $pc->decryptData($encryptedData, $iv, $data);
-
-            if ($errCode == 0) {
+// dump($errCode);
+            if($errCode == 0){
                 $user_info = json_decode($data, true);
-            } else {
-                return [API_CODE_NAME => 41001, API_MSG_NAME => '获取信息失败，请重试'];
+            }else{
+                return [API_CODE_NAME => $errCode, API_MSG_NAME => 'encryptedData 解密失败'];
             }
-            
+
             $unionid = $user_info['unionId'];
         }else{
             $unionid = $user_info['unionid'];
@@ -210,6 +210,7 @@ class Common extends ApiBase
             'province' => $user_info['province'],
             'city' => $user_info['city'],
         ];
+
         if(empty($user)){ // 不存在
 
             $user_data['unionid'] = $unionid;
@@ -218,7 +219,7 @@ class Common extends ApiBase
 
         }else{ // 存在
 
-            if(!$this->modelWxUser->updateInfo($user_where, $user_data)) return CommonError::$loginFail;
+            $this->modelWxUser->updateInfo($user_where, $user_data);
 
         }
 

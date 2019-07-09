@@ -13,30 +13,55 @@ namespace app\api\logic;
 
 use app\api\error\Common as CommonError;
 
-/**
- * 附加功能
- */
 class Vaccine extends ApiBase
 {
 
     /**
-     * create by fjw in 19.3.14
-     * 疫苗预约记录
+     * =================== 新生儿疫苗系统 begin ====================
      */
-    public function getVaccineAppointmentRecord($where=[],$field = 'a.yu_id, a.yu_time, a.yu_endtime, a.type, a.qr_url, a.yu_num, v.ym_name, j.jz_name',$order='a.yu_id desc',$paginate = false){
 
-        $this->modelVaccineAppointment->alias('a');
+    /**
+     * 获取宝宝的接种提醒
+     */
+    public function getBabyVaccineRemind($param = []){
 
-        $this->modelVaccineAppointment->join = [
+        $baby_id = (isset($param['baby_id']) && $param['baby_id'] > 0)?$param['baby_id']:0;
+        if($baby_id == 0) return [API_CODE_NAME => 41002, API_MSG_NAME => '获取baby信息失败'];
+        
+        $decoded_user_token = $param['decoded_user_token'];
 
-            [SYS_DB_PREFIX."vaccine v", "a.ym_id = v.ym_id", "left"],
-            [SYS_DB_PREFIX."jiezhong j", " a.yu_jz_id = j.jz_id", "left"],
-            
-        ];
+        $babyinfo = $this->modelBaby->getInfo(['id'=>$baby_id, 'uid'=>$decoded_user_token->user_id]);
+        if(empty($babyinfo) || !isset($babyinfo['vaccine_check_list'])) return [API_CODE_NAME => 41002, API_MSG_NAME => '获取baby信息失败'];
 
-        return $this->modelVaccineAppointment->getList($where, $field, $order, $paginate);
+        $vaccine_check = $this->modelBaby->calDateByBirthday($babyinfo['date_of_birth']);
+        $vaccine_check_list = array_filter(explode(';', $vaccine_check['vaccine_check_list']));
 
+        $vaccine_check_info = [];
+        foreach($vaccine_check['vaccine_check_info'] as $k=>$v){
+            $temp = $v->getData();
+            $vaccine_check_info[$vaccine_check_list[$k]] = strval($temp['week']);
+        }
+
+        return ['remind_days'=>array_keys($vaccine_check_info), 'vaccine_days'=>array_values($vaccine_check_info)];
+    
     }
+
+    /**
+     * 根据周数，获取疫苗信息
+     * 
+     */
+    public function getVaccineInfoByWeek($param = []){
+        $week = isset($param['week'])?$param['week']:0;
+        $vaccine = $this->modelVaccine->getList(['week'=>$week, 'status'=>1], 'ym_id, ym_name, week, ym_text, ym_yongtu', 'ym_id', false);
+        // dump($vaccine); die;
+        return $vaccine; 
+    }
+
+
+
+    /**
+     * =================== 新生儿疫苗系统 end ====================
+     */
 
 
     
