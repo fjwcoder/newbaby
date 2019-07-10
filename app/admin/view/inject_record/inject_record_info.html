@@ -1,0 +1,73 @@
+<!-- <form action="{:url()}" method="post" class="form_single"> -->
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>uid</label>
+              <span>（uid）</span>
+              <input class="form-control" name="uid" placeholder="请输入uid" value="{$info['uid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>baby_id</label>
+              <span>（baby_id）</span>
+              <input class="form-control" name="baby_id" placeholder="请输入baby_id" value="{$info['baby_id']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>疫苗信息</label>
+              <span>（疫苗信息：厂家、批号）</span>
+              <input class="form-control" name="vaccine_name" placeholder="请输入疫苗信息" value="{$info['vaccine_name']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>接种部位</label>
+              <span>（左上臀；右上臀；口服；左臀部；右臀部；左大腿；右大腿）</span>
+              <input class="form-control" name="inject_body_part" placeholder="请输入接种部位" value="{$info['inject_body_part']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>接种时间</label>
+              <span>（格式：2000-01-01）</span>
+              <input class="form-control" name="inject_date" placeholder="请输入接种时间" value="{$info['inject_date']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>接种后的反应</label>
+              <!-- <span>（出生地点）</span> -->
+              <input class="form-control" name="reaction" placeholder="请输入接种后的反应" value="{$info['reaction']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>状态</label>
+              <span>（1:正常；0:异常；-1:删除）</span>
+              <input class="form-control" name="status" placeholder="请输入状态" value="{$info['status']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+    
+        </div>
+      </div>
+      <div class="box-footer">
+        
+        <!-- <input type="hidden" name="id" value="{$info['id']|default='0'}"/> -->
+          
+        <!-- {include file="layout/edit_btn_group"/} -->
+        <a class="btn" onclick="javascript:history.back(-1);return false;"><i class="fa fa-history"></i> 返 回</a>
+      </div>
+    </div>
+<!-- </form> -->

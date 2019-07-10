@@ -1,0 +1,61 @@
+<div class="box">
+  <div class="box-header ">
+    
+    <div class="box-tools ">
+        <div class="input-group input-group-sm search-form">
+            <input name="search_data" class="pull-right search-input" value="{:input('search_data')}" placeholder="支持宝宝名字|父亲名字|母亲名字" type="text">
+            <div class="input-group-btn">
+              <button type="button" id="search" url="{:url('babylist')}" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <br/>
+  </div>
+    
+  <div class="box-body table-responsive">
+    <table  class="table table-bordered table-hover">
+      <thead>
+      <tr>
+          <th>宝宝名字</th>
+          <th>出生时间</th>
+          <th>父亲名字</th>
+          <th>母亲名字</th>
+          <th>状态</th>
+          <th>操作</th>
+      </tr>
+      </thead>
+      
+      {notempty name='list'}
+        <tbody>
+            {volist name='list' id='vo'}
+                <tr>
+                  <td>{$vo.full_name_of_baby}</td>
+                  <td>{$vo.date_of_birth}</td>
+                  <td>{$vo.father_name}</td>
+                  <td>{$vo.mother_name}</td>
+                  <td>{$vo.status_text}</td>
+                  <td class="col-md-3 text-center">
+                      <ob_link><a href="{:url('getBabyInfo', array('id' => $vo['id']))}" class="btn"><i class="fa fa-search-plus"></i> 详 情</a></ob_link>
+                  </td>
+                </tr>
+            {/volist}
+        </tbody>
+        {else/}
+        <tbody><tr class="odd"><td colspan="8" class="text-center" valign="top">{:config('empty_list_describe')}</td></tr></tbody>
+      {/notempty}
+    </table>
+  </div>
+
+  <div class="box-footer clearfix text-center">
+      {$list->render()}
+  </div>
+
+</div>
+
+<script>
+    //导出功能
+    $(".export").click(function(){
+        
+        window.location.href = searchFormUrl($(".export"));
+    });
+</script>

@@ -1,0 +1,282 @@
+<!-- <form action="{:url()}" method="post" class="form_single"> -->
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>uid</label>
+              <span>（uid）</span>
+              <input class="form-control" name="uid" placeholder="请输入uid" value="{$info['uid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_openid</label>
+              <span>（wx_openid）</span>
+              <input class="form-control" name="wx_openid" placeholder="请输入wx_openid" value="{$info['wx_openid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>app_openid</label>
+              <span>（app_openid）</span>
+              <input class="form-control" name="app_openid" placeholder="请输入app_openid" value="{$info['app_openid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>unionid</label>
+              <span>（unionid）</span>
+              <input class="form-control" name="unionid" placeholder="请输入unionid" value="{$info['unionid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>出生证编号</label>
+              <span>（出生证编号）</span>
+              <input class="form-control" name="birth_certificate_no" placeholder="请输入出生证编号" value="{$info['birth_certificate_no']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>接种证编号</label>
+              <span>（接种证编号）</span>
+              <input class="form-control" name="vaccine_certificate_no" placeholder="请输入接种证编号" value="{$info['vaccine_certificate_no']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>宝宝姓名</label>
+              <span>（宝宝姓名）</span>
+              <input class="form-control" name="full_name_of_baby" placeholder="请输入宝宝姓名" value="{$info['full_name_of_baby']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>宝宝性别</label>
+              <span>（性别）</span>
+              <input class="form-control" name="baby_sex" placeholder="请输入性别" value="{$info['baby_sex']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>出生日期</label>
+              <span>（出生日期，格式：2000-01-01）</span>
+              <input class="form-control" name="date_of_birth" placeholder="请输入出生日期" value="{$info['date_of_birth']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>出生地点</label>
+              <span>（出生地点）</span>
+              <input class="form-control" name="place_of_birth" placeholder="请输入出生地点" value="{$info['place_of_birth']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>出生孕周</label>
+              <span>（出生孕周，单位：周）</span>
+              <input class="form-control" name="pregnant_week" placeholder="请输入出生孕周" value="{$info['pregnant_week']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>健康状况</label>
+              <span>（健康状况：1 良好； 2 一般； 3 差）</span>
+              <input class="form-control" name="health_status" placeholder="请输入健康状况" value="{$info['health_status']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>宝宝体重</label>
+              <span>（单位：克）</span>
+              <input class="form-control" name="baby_weight" placeholder="请输入宝宝体重" value="{$info['baby_weight']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>宝宝身高</label>
+              <span>（单位：厘米）</span>
+              <input class="form-control" name="baby_height" placeholder="请输入宝宝身高" value="{$info['baby_height']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>出生地点分类</label>
+              <span>（1 医院；2 妇幼保健院；3 家庭；4 其他）</span>
+              <input class="form-control" name="birth_place_type" placeholder="请输入出生地点分类" value="{$info['birth_place_type']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>接生机构名称</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="name_of_facility" placeholder="请输入接生机构名称" value="{$info['name_of_facility']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>父亲姓名</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="father_name" placeholder="请输入父亲姓名" value="{$info['father_name']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>父亲年龄</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="father_age" placeholder="请输入父亲年龄" value="{$info['father_age']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>父亲国籍</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="father_nationality" placeholder="请输入父亲国籍" value="{$info['father_nationality']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>父亲民族</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="father_nation" placeholder="请输入父亲民族" value="{$info['father_nation']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>父亲身份证号</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="father_id_no" placeholder="请输入父亲身份证号" value="{$info['father_id_no']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>母亲姓名</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="mother_name" placeholder="请输入母亲姓名" value="{$info['mother_name']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>母亲年龄</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="mother_age" placeholder="请输入母亲年龄" value="{$info['mother_age']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>母亲国籍</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="mother_nationality" placeholder="请输入母亲国籍" value="{$info['mother_nationality']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>母亲民族</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="mother_nation" placeholder="请输入母亲民族" value="{$info['mother_nation']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>母亲身份证号</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="mother_id_no" placeholder="请输入母亲身份证号" value="{$info['mother_id_no']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>监护人姓名</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="guardian_name" placeholder="请输入监护人姓名" value="{$info['guardian_name']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>监护人手机号</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="guardian_mobile" placeholder="请输入监护人手机号" value="{$info['guardian_mobile']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>备用手机号</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="backup_mobile" placeholder="请输入备用手机号" value="{$info['backup_mobile']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>与宝宝的关系</label>
+              <!-- <span>（UID）</span> -->
+              <input class="form-control" name="relationship_to_baby" placeholder="请输入与宝宝的关系" value="{$info['relationship_to_baby']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>所在城市</label>
+              <span>（最后为详细地址）</span>
+              <input class="form-control" name="address" placeholder="请输入所在城市" value="{$info['address']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>疫苗接种提醒日期</label>
+              <!-- <span>（UID）</span> -->
+              <?php $vaccine_list = explode(';',$info['vaccine_check_list']);?>
+              <textarea  class="form-control" name="vaccine_check_list" >{foreach $vaccine_list as $vvo}{$vvo}&#10;{/foreach}</textarea>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>状态</label>
+              <span>（1:正常；0:异常；-1:删除）</span>
+              <input class="form-control" name="status" placeholder="请输入状态" value="{$info['status']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+    
+        </div>
+      </div>
+      <div class="box-footer">
+        
+        <!-- <input type="hidden" name="id" value="{$info['id']|default='0'}"/> -->
+          
+        <!-- {include file="layout/edit_btn_group"/} -->
+        <a class="btn" onclick="javascript:history.back(-1);return false;"><i class="fa fa-history"></i> 返 回</a>
+      </div>
+    </div>
+<!-- </form> -->

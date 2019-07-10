@@ -1,0 +1,65 @@
+<div class="box">
+  <div class="box-header ">
+    
+    <div class="box-tools ">
+        <div class="input-group input-group-sm search-form">
+            <input name="search_data" class="pull-right search-input" value="{:input('search_data')}" placeholder="支持宝宝ID|疫苗名称|接种时间" type="text">
+            <div class="input-group-btn">
+              <button type="button" id="search" url="{:url('injectrecordlist')}" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <br/>
+  </div>
+    
+  <div class="box-body table-responsive">
+    <table  class="table table-bordered table-hover">
+      <thead>
+      <tr>
+          <th>宝宝ID</th>
+          <th>疫苗名称</th>
+          <th>疫苗信息</th>
+          <th>接种宝宝part</th>
+          <th>接种时间</th>
+          <th>接种后反应</th>
+          <th>状态</th>
+          <th>操作</th>
+      </tr>
+      </thead>
+      
+      {notempty name='list'}
+        <tbody>
+            {volist name='list' id='vo'}
+                <tr>
+                  <td>{$vo.baby_id}</td>
+                  <td>{$vo.vaccine_name}</td>
+                  <td>{$vo.vaccine_info}</td>
+                  <td>{$vo.inject_body_part}</td>
+                  <td>{$vo.inject_date}</td>
+                  <td>{$vo.reaction}</td>
+                  <td>{$vo.status_text}</td>
+                  <td class="col-md-3 text-center">
+                      <ob_link><a href="{:url('getInjectRecordInfo', array('id' => $vo['id']))}" class="btn"><i class="fa fa-search-plus"></i> 详 情</a></ob_link>
+                  </td>
+                </tr>
+            {/volist}
+        </tbody>
+        {else/}
+        <tbody><tr class="odd"><td colspan="8" class="text-center" valign="top">{:config('empty_list_describe')}</td></tr></tbody>
+      {/notempty}
+    </table>
+  </div>
+
+  <div class="box-footer clearfix text-center">
+      {$list->render()}
+  </div>
+
+</div>
+
+<script>
+    //导出功能
+    $(".export").click(function(){
+        
+        window.location.href = searchFormUrl($(".export"));
+    });
+</script>

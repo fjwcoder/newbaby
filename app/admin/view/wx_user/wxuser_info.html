@@ -1,0 +1,181 @@
+<!-- <form action="{:url()}" method="post" class="form_single"> -->
+    <div class="box">
+      <div class="box-body">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>user_id</label>
+              <span>（user_id）</span>
+              <input class="form-control" name="user_id" placeholder="请输入user_id" value="{$info['user_id']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>手机</label>
+              <!-- <span>（baby_id）</span> -->
+              <input class="form-control" name="mobile" placeholder="请输入手机" value="{$info['mobile']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>app_openid</label>
+              <span>（app_openid）</span>
+              <input class="form-control" name="app_openid" placeholder="请输入app_openid" value="{$info['app_openid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>昵称</label>
+              <!-- <span>（）</span> -->
+              <input class="form-control" name="nickname" placeholder="请输入昵称" value="{$info['nickname']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>性别</label>
+              <span>（0：未知；1：男；2：女）</span>
+              <input class="form-control" name="sex" placeholder="请输入性别" value="{$info['sex']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>头像</label>
+              <!-- <span>（）</span> -->
+              <input class="form-control" name="headimgurl" placeholder="请输入头像" value="{$info['headimgurl']}" type="text" disabled="disabled">
+              <!-- <img src="{$info['headimgurl']}"> -->
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>app_watermark</label>
+              <!-- <span>（）</span> -->
+              <input class="form-control" name="app_watermark" placeholder="请输入app_watermark" value="{$info['app_watermark']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>app_subscribe_time</label>
+              <span>（时间戳）</span>
+              <input class="form-control" name="app_subscribe_time" placeholder="请输入app_subscribe_time" value="{$info['app_subscribe_time']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>UnionID</label>
+              <span>（UnionID）</span>
+              <input class="form-control" name="unionid" placeholder="请输入UnionID" value="{$info['unionid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_subscribe</label>
+              <span>（wx_subscribe）</span>
+              <input class="form-control" name="wx_subscribe" placeholder="请输入wx_subscribe" value="{$info['wx_subscribe']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>用户openid</label>
+              <!-- <span>（wx_openid）</span> -->
+              <input class="form-control" name="wx_openid" placeholder="请输入用户openid" value="{$info['wx_openid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>所在国家所用的语言</label>
+              <span>（en:英文；zh_CN:简体中文；zh_TW:繁体中文）</span>
+              <input class="form-control" name="wx_language" placeholder="请输入wx_language" value="{$info['wx_language']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>所在城市</label>
+              <!-- <span>（city）</span> -->
+              <input class="form-control" name="city" placeholder="请输入所在城市" value="{$info['city']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>所在省份</label>
+              <!-- <span>（province）</span> -->
+              <input class="form-control" name="province" placeholder="请输入所在省份" value="{$info['province']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>所在国家</label>
+              <!-- <span>（country）</span> -->
+              <input class="form-control" name="country" placeholder="请输入所在国家" value="{$info['country']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_subscribe_time</label>
+              <span>（wx_subscribe_time）</span>
+              <input class="form-control" name="wx_subscribe_time" placeholder="请输入wx_subscribe_time" value="{$info['wx_subscribe_time']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_groupid</label>
+              <span>（wx_groupid）</span>
+              <input class="form-control" name="wx_groupid" placeholder="请输入wx_groupid" value="{$info['wx_groupid']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_tagid_list</label>
+              <span>（wx_tagid_list）</span>
+              <input class="form-control" name="wx_tagid_list" placeholder="请输入wx_tagid_list" value="{$info['wx_tagid_list']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_subscribe_scene</label>
+              <span>（wx_subscribe_scene）</span>
+              <input class="form-control" name="wx_subscribe_scene" placeholder="请输入wx_subscribe_scene" value="{$info['wx_subscribe_scene']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_qr_scene</label>
+              <span>（wx_qr_scene）</span>
+              <input class="form-control" name="wx_qr_scene" placeholder="请输入wx_qr_scene" value="{$info['wx_qr_scene']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>wx_qr_scene_str</label>
+              <span>（wx_qr_scene_str）</span>
+              <input class="form-control" name="wx_qr_scene_str" placeholder="请输入wx_qr_scene_str" value="{$info['wx_qr_scene_str']}" type="text" disabled="disabled">
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>状态</label>
+              <span>（1:正常；0:异常；-1:删除）</span>
+              <input class="form-control" name="status" placeholder="请输入状态" value="{$info['status']}" type="text" disabled="disabled">
+            </div>
+          </div>
+
+    
+        </div>
+      </div>
+      <div class="box-footer">
+        
+        <!-- <input type="hidden" name="id" value="{$info['id']|default='0'}"/> -->
+          
+        <!-- {include file="layout/edit_btn_group"/} -->
+        <a class="btn" onclick="javascript:history.back(-1);return false;"><i class="fa fa-history"></i> 返 回</a>
+      </div>
+    </div>
+<!-- </form> -->
