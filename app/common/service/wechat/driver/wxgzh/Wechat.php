@@ -12,7 +12,7 @@ class Wechat{
         'token'=>''
     );
     
-    private $siteroot = 'http://xiaoai.fjwcoder.com/index.php/';
+    private $siteroot = 'https://newbaby.fjwcoder.com/index.php/';
 
     
     
@@ -336,7 +336,7 @@ class Wechat{
 
 
     public function menuDIY(){
-        $miniprogram_appid = 'wxb31a31b942906cc3';
+        $miniprogram_appid = 'wx36496b5d0c68c550';
         $out_redirect_url = 'http://xiaoai.fjwcoder.com/';
         $menu = [
             'button'=>[
